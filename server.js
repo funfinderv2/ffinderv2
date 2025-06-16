@@ -18,6 +18,8 @@ io.on('connection', (socket) => {
   console.log('🔌 Usuário conectado:', socket.id);
 
   socket.on('chat message', (msg) => {
+    console.log('📨 Nova mensagem recebida:', msg); // 👈 Adicione isto para logar
+
     io.emit('chat message', msg);
   });
 
@@ -25,6 +27,7 @@ io.on('connection', (socket) => {
     console.log('⛔ Usuário desconectado:', socket.id);
   });
 });
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
