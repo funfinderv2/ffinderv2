@@ -14,19 +14,21 @@ const io = new Server(server, {
 });
 
 // Evento de conexão
-io.on('connection', (socket) => {
-  console.log('🔌 Usuário conectado:', socket.id);
+const socket = io("https://funfinder-socket.onrender.com");
 
-  socket.on('chat message', (msg) => {
-    console.log('📨 Nova mensagem recebida:', msg); // 👈 Adicione isto para logar
-
-    io.emit('chat message', msg);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('⛔ Usuário desconectado:', socket.id);
-  });
+socket.on("connect", () => {
+  console.log("🟢 Socket conectado:", socket.id);
 });
+
+socket.on("chat message", (msg) => {
+  if (msg.to == window.currentUserId) {
+    console.log("🔔 Nova mensagem recebida:", msg);
+
+    // Aqui você pode disparar um popup, badge ou som
+    showPopup(msg);
+  }
+});
+
 
 
 const PORT = process.env.PORT || 3000;
